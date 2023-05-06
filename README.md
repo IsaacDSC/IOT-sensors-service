@@ -1,5 +1,6 @@
 # IOT-sensors-service
 
+<img src="./start.app.gif"/>
 
 ## Requisitos:
 
