@@ -1,0 +1,51 @@
+version: "3"
+services:
+  reverse-proxy:
+    image: traefik:v2.10
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    labels:
+      - "traefik.port=8000"
+    volumes:
+      # - /var/run/docker.sock:/var/run/docker.sock
+      - "./traefik.dev.toml:/etc/traefik/traefik.toml"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  postgres:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=iot
+  app:
+      build: .
+      command: bash -c 'uvicorn src.main:app --host 0.0.0.0'
+      volumes:
+        - .:/code
+      expose:
+        - 8000
+      # ports:
+      #   - "8000:8000"
+      labels:
+        # - "traefik.http.routers.whoami.rule=Host(`192.168.1.100`)"
+          - "traefik.enable=true"
+          - "traefik.http.routers.fastapi.rule=Host(`192.168.1.100`)"
+          # - "traefik.http.routers.fastapi.rule=Host(`fastapi.localhost`)"
+          - "traefik.port=8080"
+      depends_on:
+        - postgres
+      restart: on-failure
+  pgadmin:
+      container_name: pgadmin
+      image: dpage/pgadmin4
+      environment:
+        - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+        - PGADMIN_DEFAULT_PASSWORD=root
+      ports:
+        - "5050:5050"
+      depends_on:
+        - postgres
