@@ -19,3 +19,17 @@ OK -> 4. Desenvolver um sistema de watchdog para monitorar o status dos serviço
 5. Implementar uma solução baseada em containers usando Docker para facilitar o deploy e a escalabilidade do sistema.
 
 6. Criar um script para simular o envio de 5000 dados em 1 minuto, garantindo que o sistema suporte essa carga sem downtime.
+
+
+### 
+
+###### Command run application in development
+uvicorn src.main:app --port 8000 --reload
+
+
+###### Command build application Dockerfile
+docker build . --rm -t fastapi:latest
+
+
+###### Command start application with Dockerfile
+ docker run --name fastapi -p 8080:8080 fastapi:latest
