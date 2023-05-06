@@ -3,10 +3,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-enviroments = dotenv_values(".env")
+environments = dotenv_values(".env")
 
 # CONFIG_DATABASE = "sqlite:///./sql_app.db"
-CONFIG_DATABASE = enviroments['DATABASE_URL']
+CONFIG_DATABASE = environments['DATABASE_URL']
 engine = create_engine(CONFIG_DATABASE)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

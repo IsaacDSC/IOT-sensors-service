@@ -1,5 +1,5 @@
 {
-    "files.exclude":{
+    "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
         "**/.hg": true,
@@ -9,5 +9,15 @@
         "**/__init__.py": true,
         "**/__pycache__": true,
         "**/venv": true
+    },
+    "rest-client.environmentVariables": {
+        "local-iot-sensor-service": {
+            "host": "http://localhost",
+            "port": ":8000"
+        },
+        "docker-iot-sensor-service": {
+            "host": "http://192.168.1.100",
+            "port": ""
+        }
     }
 }

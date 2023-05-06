@@ -5,12 +5,10 @@ services:
     command: --api.insecure=true --providers.docker
     ports:
       - "80:80"
-      # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     labels:
       - "traefik.port=8000"
     volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock
       - "./traefik.dev.toml:/etc/traefik/traefik.toml"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
   postgres:
@@ -28,13 +26,9 @@ services:
         - .:/code
       expose:
         - 8000
-      # ports:
-      #   - "8000:8000"
       labels:
-        # - "traefik.http.routers.whoami.rule=Host(`192.168.1.100`)"
           - "traefik.enable=true"
-          - "traefik.http.routers.fastapi.rule=Host(`192.168.1.100`)"
-          # - "traefik.http.routers.fastapi.rule=Host(`fastapi.localhost`)"
+          - "traefik.http.routers.fastapi.rule=Host(`${WHOAMI_IP}`)"
           - "traefik.port=8080"
       depends_on:
         - postgres
