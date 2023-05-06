@@ -1,0 +1,37 @@
+### 
+GET http://localhost:8080
+Accept: application/json
+
+### 
+POST http://localhost:8080/sensor/
+Accept: application/json
+
+{
+    "sensor_name": "Válvula solenoide",
+    "tag": "SVC506",
+    "value": 1.90,
+    "unit": "1m2"
+}
+
+###
+PUT http://localhost:8080/sensor/?sensorId=100
+Accept: application/json
+
+{
+    "sensor_name": "Válvula solenoide",
+    "tag": "SVC50015",
+    "value": 1.90,
+    "unit": "1m2"
+}
+
+
+###
+POST http://localhost:8080/operation/sensor/analogic
+Accept: application/json
+
+{
+    "sensor_name": "Válvula solenoide",
+    "tag": "SVC507",
+    "value": 1.80,
+    "unit": "1m2"
+}
